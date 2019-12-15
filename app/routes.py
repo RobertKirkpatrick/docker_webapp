@@ -1,3 +1,4 @@
+ # -*- coding: latin-1 -*-
 from flask import render_template, flash, url_for, redirect, request
 from app import app
 from app.forms import LoginForm, spellcheckForm
