@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  webapp:
+      image: webapp:latest
+      build: .
+      ports:
+       - "8080:8080"
+      volumes:
+       - .:/code
+      deploy: 
+        mode: replicated
+        replicas: 4
+        # labels: [APP=app]
+        # service resource management
+        resources:
+          # Hard limit - Docker does not allow to allocate more
+          limits:
+            cpus: '0.25'
+            memory: 100M
+          # Soft limit - Docker makes best effort to return to it
+          reservations:
+            cpus: '0.25'
+            memory: 25M
+      secrets:
+          - adminpwd3
+          - admin2fa  
+
+secrets:        
+    adminpwd3:
+        external: true
+    admin2fa:
+        external: true

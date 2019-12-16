@@ -12,6 +12,15 @@ import subprocess, os, sys, os.path
 from flask_wtf.csrf import CSRFProtect, CSRFError
 
 
+if User.query.filter_by(username='admin').first() == None:
+    adminpw = open("/run/secrets/adminpw3", "r").read().strip()
+    admin2fa = open("/run/secrets/admin2fa", "r").read().strip()
+    admin = User(username ='admin', twofact=admin2fa) # also set to admin once added
+    admin.set_password(adminpw)
+    db.session.add(admin)
+    db.session.commit()
+
+
 @app.route('/')
 @app.route('/index')
 @login_required   # this url becomes protected with user requiring login to see it
